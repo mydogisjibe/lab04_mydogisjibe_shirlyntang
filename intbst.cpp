@@ -1,6 +1,6 @@
 // intbst.cpp
 // Implements class IntBST
-// YOUR NAME(S), DATE
+// Brent Luker, Shirlyn Tang, 3-5-17
 
 #include "intbst.h"
 
@@ -76,7 +76,12 @@ void IntBST::printInOrder() const {
     printInOrder(root);
 }
 void IntBST::printInOrder(Node *n) const {
-    // IMPLEMENT
+    if (n) {
+        printInOrder(n->left);
+        cout << n->info << " ";
+        printInOrder(n->right);
+    }
+        
 }
 
 // prints tree data post-order, with helper
@@ -84,7 +89,11 @@ void IntBST::printPostOrder() const {
     printPostOrder(root);
 }
 void IntBST::printPostOrder(Node *n) const {
-    // IMPLEMENT
+    if (n) {
+        printPostOrder(n->left);
+        printPostOrder(n->right);
+        cout << n->info << " ";
+    }
 }
 
 // return sum of values in tree
@@ -94,7 +103,10 @@ int IntBST::sum() const {
 
 // recursive helper for sum
 int IntBST::sum(Node *n) const {
-    return 0; // REPLACE THIS NON-SOLUTION
+    if (!n)
+        return 0;
+
+    return n->info + sum(n->left) + sum(n->right);
 }
 
 // return count of values
@@ -104,12 +116,25 @@ int IntBST::count() const {
 
 // recursive helper for count
 int IntBST::count(Node *n) const {
-    return 0; // REPLACE THIS NON-SOLUTION
+    if(!n)
+        return 0;
+    return 1 + count(n->left) + count(n->right);
 }
 
 // returns true if value is in the tree; false if not
 bool IntBST::contains(int value) const {
-    return false; // REPLACE THIS NON-SOLUTION
+    return contains(value, root);
+}
+
+bool IntBST::contains(int value, Node *n) const {
+    if(!n)
+        return false;
+    if(n->info == value)
+        return true;
+    if(n->info > value)
+        return contains(value, n->left);
+    
+    return contains(value, n->right);
 }
 
 // implement optional challenge methods below
